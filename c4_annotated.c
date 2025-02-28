@@ -11,7 +11,7 @@
 #include <memory.h>
 #include <unistd.h>
 #include <fcntl.h>
-#define int long long
+#define int long long // makes every int in the code long long 
 
 char *p, *lp, // current position in source code
      *data;   // data/bss pointer
