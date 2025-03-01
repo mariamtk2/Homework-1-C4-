@@ -1,0 +1,22 @@
+After analyzing the c4.c file using Lizard, I obtained several key metrics regarding its structure and complexity:
+
+1. Lines of Code (LOC)
+The program consists of 642 non-commented lines of code (NLOC).
+Individual functions have LOC ranging from 65 to 213.
+
+2. Cyclomatic Complexity (CCN)
+The highest complexity function is main, with a CCN of 100, indicating a high level of branching and decision-making.
+Other functions also exhibit significant complexity such as next which has has 85, and expr which has 57.
+These values suggest that the code may be difficult to maintain or refactor.
+
+3. Number of Functions & Their Sizes
+The program contains 4 functions.
+Their sizes vary, with the largest function spanning 213 lines and the smallest at 65 lines.
+
+4. Token Count
+The total token count is 1256.5 on average per function, with main being the most complex at 2214 tokens.
+A high token count indicates dense logic, potentially making the code harder to read and optimize.
+Warnings Identified
+
+Important to note that Lizard issued warnings due to high cyclomatic complexity (> 15) and large function sizes (> 1000 LOC).
+These suggest potential maintainability and readability issues.
