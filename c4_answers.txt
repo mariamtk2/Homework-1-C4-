@@ -1,0 +1,84 @@
+
+ANSWER CONCEPTUAL QUESTIONS
+
+1. What is the purpose of the next() function, and how does it contribute to the compilation process?
+
+
+The next() function is the lexer (tokenizer) of the C4 compiler. 
+It scans the source code character by character and converts it into tokens, which are then used by the parser and code generator.
+
+Functionality:
+	•Reads characters from p (current position in the source code).
+	•Skips whitespace and handles newlines (tracking line numbers for debugging).
+	•Recognizes keywords, identifiers, numbers, string literals, and operators.
+	•Handles comments (skipping // lines).
+	•Categorizes operators (+, -, *, /, etc.) with the correct precedence.
+
+Contribution to compilation:
+	•Converts source code into tokens for the parser.
+	•Enables syntactic analysis by recognizing keywords (if, while, return, etc.).
+	•Ensures symbol resolution by handling identifiers and storing them in the symbol table (sym).
+
+
+2. How does C4 handle symbol resolution (e.g., variables, functions)?
+
+C4 maintains a symbol table (sym) to track identifiers (variables, functions, etc.), their types, and their memory locations.
+
+Process of Symbol Resolution:
+
+	1. Identifiers and Keywords:
+		•The next() function hashes identifiers and checks if they exist in sym.
+	2. Global and Local Storage:
+		•Global variables (Glo class) are stored in data.
+		•Local variables (Loc class) are stored using stack offsets (LEA opcode).
+	3. Function Storage:
+		•Functions (Fun class) are stored in sym and referenced using their entry points in bytecode.
+	4. System Functions:
+		•Built-in functions (printf, malloc, etc.) are preloaded into sym with predefined opcodes.
+
+When resolving a variable:
+	•Local variables → Stack-based addressing (LEA).
+	•Global variables → Direct memory addressing (IMM).
+	•Functions → Jump to entry point (JSR).
+
+
+
+
+3. What are the limitations of C4 as a compiler? What features of C does it not support?
+
+
+C4 is a minimalist compiler, meaning it supports only a subset of C. 
+It does not support: 
+- Structs & Unions	                        
+- Floating Point (float, double)	          
+- Function Prototypes & Overloading	        
+- Preprocessor (#define, #include)	        
+- Complex Expressions (e.g., +=, *=, etc.)	
+- Standard Library (stdio.h, stdlib.h)	    
+
+
+Main Drawbacks:
+	•No dynamic memory management beyond malloc() and free().
+	•No function pointers.
+	•Limited operator precedence handling.
+	•No error handling (compilation errors halt execution immediately).
+	•No modular compilation (cannot compile multiple files together).
+
+These limitations make C4 only suitable for compiling itself, but not for general-purpose C programming.
+
+
+4. How does C4 achieve self-hosting (i.e., compiling itself)? What are the implications of this design?
+
+
+C4 achieves self-hosting by being a minimalist subset of C that can compile itself.
+
+How it works:
+	1. The C4 compiler is written in C4 itself, ensuring it is self-sustaining.
+	2. It first compiles itself to generate bytecode, which the built-in virtual machine then executes.
+	3. Once compiled, C4 can process its own source code and regenerate itself.
+
+Implications:
+	•Bootstrapping: Since C4 can compile itself, it can be ported to new platforms by first running it on a host C compiler and then using its own compiled version.
+	•Minimalism: Demonstrates that only a small core of C features is needed for self-hosting.
+	•Educational Value: Helps programmers understand how a compiler can be built with minimal dependencies.
+
